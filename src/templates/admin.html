@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELC Parking Admin - SUU</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .stats-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 20px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .lots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .lot-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .lot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .lot-header {
+            padding: 20px;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .lot-header h2 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .lot-header .permit-type {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .lot-info {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .occupancy-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-box.available .number {
+            color: #4CAF50;
+        }
+
+        .stat-box.occupied .number {
+            color: #EF5350;
+        }
+
+        .stat-box.total .number {
+            color: #2196F3;
+        }
+
+        .stat-box .label {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50 0%, #FFA726 70%, #EF5350 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-clear {
+            background: #4CAF50;
+        }
+
+        .btn-fill {
+            background: #EF5350;
+        }
+
+        .btn-random {
+            background: #FFA726;
+        }
+
+        .spaces-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .space {
+            aspect-ratio: 1;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .space.empty {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .space.occupied {
+            background: #EF5350;
+            color: white;
+        }
+
+        .space:hover {
+            border: 2px solid #333;
+            transform: scale(1.1);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+        }
+
+        .refresh-all {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .refresh-all button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .refresh-all button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .last-update {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .lots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .spaces-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 ELC Parking Admin Panel</h1>
+            <p>Southern Utah University - Electronic Learning Center</p>
+            <p style="font-size: 0.9em; margin-top: 10px; color: #999;">
+                Click individual spaces to toggle occupied/empty status
+            </p>
+        </div>
+
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalSpaces">0</div>
+                <div class="stat-label">Total Spaces</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalAvailable" style="color: #4CAF50;">0</div>
+                <div class="stat-label">Available</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalOccupied" style="color: #EF5350;">0</div>
+                <div class="stat-label">Occupied</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="overallPercent">0%</div>
+                <div class="stat-label">Overall Occupancy</div>
+            </div>
+        </div>
+
+        <div class="lots-grid" id="lotsGrid">
+            <!-- Parking lots will be inserted here -->
+        </div>
+
+        <div class="refresh-all">
+            <button onclick="loadAllLots()">🔄 Refresh All Data</button>
+        </div>
+
+        <div class="last-update" id="lastUpdate">
+            Last updated: Never
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+
+        // Load all parking lots
+        async function loadAllLots() {
+            try {
+                const response = await fetch(`${API_BASE}/lots`);
+                const lots = await response.json();
+                
+                const grid = document.getElementById('lotsGrid');
+                grid.innerHTML = '';
+
+                let totalSpaces = 0;
+                let totalOccupied = 0;
+                let totalAvailable = 0;
+
+                for (const lot of lots) {
+                    totalSpaces += lot.total_spaces;
+                    totalOccupied += lot.occupied_spaces;
+                    totalAvailable += lot.available_spaces;
+
+                    const lotCard = await createLotCard(lot);
+                    grid.appendChild(lotCard);
+                }
+
+                // Update overall stats
+                document.getElementById('totalSpaces').textContent = totalSpaces;
+                document.getElementById('totalAvailable').textContent = totalAvailable;
+                document.getElementById('totalOccupied').textContent = totalOccupied;
+                const percent = ((totalOccupied / totalSpaces) * 100).toFixed(1);
+                document.getElementById('overallPercent').textContent = percent + '%';
+
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('lastUpdate').textContent = 
+                    `Last updated: ${now.toLocaleTimeString()}`;
+
+            } catch (error) {
+                console.error('Error loading lots:', error);
+                alert('Error loading parking data. Make sure the server is running.');
+            }
+        }
+
+        // Create a parking lot card
+        async function createLotCard(lot) {
+            const card = document.createElement('div');
+            card.className = 'lot-card';
+            card.id = `lot-${lot.lot_id}`;
+
+            // Get detailed lot data including spaces
+            const detailResponse = await fetch(`${API_BASE}/lot/${lot.lot_id}`);
+            const detailData = await detailResponse.json();
+
+            const availablePercent = (lot.available_spaces / lot.total_spaces) * 100;
+
+            card.innerHTML = `
+                <div class="lot-header">
+                    <h2>LOT ${lot.lot_id}</h2>
+                    <div class="permit-type">${lot.permit_type} Parking</div>
+                </div>
+                <div class="lot-info">
+                    <div class="occupancy-stats">
+                        <div class="stat-box available">
+                            <div class="number">${lot.available_spaces}</div>
+                            <div class="label">Available</div>
+                        </div>
+                        <div class="stat-box occupied">
+                            <div class="number">${lot.occupied_spaces}</div>
+                            <div class="label">Occupied</div>
+                        </div>
+                        <div class="stat-box total">
+                            <div class="number">${lot.total_spaces}</div>
+                            <div class="label">Total</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${availablePercent}%">
+                            ${availablePercent.toFixed(0)}% Available
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-clear" onclick="clearLot('${lot.lot_id}')">
+                            Clear All
+                        </button>
+                        <button class="btn btn-random" onclick="randomizeLot('${lot.lot_id}')">
+                            Randomize
+                        </button>
+                        <button class="btn btn-fill" onclick="fillLot('${lot.lot_id}')">
+                            Fill All
+                        </button>
+                    </div>
+
+                    <div class="spaces-grid" id="spaces-${lot.lot_id}">
+                        ${createSpacesGrid(detailData)}
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #4CAF50;"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #EF5350;"></div>
+                            <span>Occupied</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Create the spaces grid HTML
+        function createSpacesGrid(lotData) {
+            let html = '';
+            for (let i = 0; i < lotData.spaces.length; i++) {
+                const occupied = lotData.spaces[i];
+                const statusClass = occupied ? 'occupied' : 'empty';
+                const statusText = occupied ? '🚗' : i + 1;
+                html += `
+                    <div class="space ${statusClass}" 
+                         onclick="toggleSpace('${lotData.lot_id}', ${i})"
+                         title="Space ${i + 1}">
+                        ${statusText}
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        // Toggle a parking space
+        async function toggleSpace(lotId, spaceIndex) {
+            try {
+                const response = await fetch(`${API_BASE}/lot/${lotId}/toggle/${spaceIndex}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Reload just this lot
+                    await loadSingleLot(lotId);
+                    // Update overall stats
+                    await updateOverallStats();
+                }
+            } catch (error) {
+                console.error('Error toggling space:', error);
+            }
+        }
+
+        // Clear all spaces in a lot
+        async function clearLot(lotId) {
+            try {
+                const response = await fetch(`${API_BASE}/lot/${lotId}/reset`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    await loadSingleLot(lotId);
+                    await updateOverallStats();
+                }
+            } catch (error) {
+                console.error('Error clearing lot:', error);
+            }
+        }
+
+        // Fill all spaces in a lot
+        async function fillLot(lotId) {
+            try {
+                const response = await fetch(`${API_BASE}/lot/${lotId}/fill`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    await loadSingleLot(lotId);
+                    await updateOverallStats();
+                }
+            } catch (error) {
+                console.error('Error filling lot:', error);
+            }
+        }
+
+        // Randomize occupancy in a lot
+        async function randomizeLot(lotId) {
+            try {
+                const response = await fetch(`${API_BASE}/lot/${lotId}/random`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    await loadSingleLot(lotId);
+                    await updateOverallStats();
+                }
+            } catch (error) {
+                console.error('Error randomizing lot:', error);
+            }
+        }
+
+        // Reload a single lot card
+        async function loadSingleLot(lotId) {
+            try {
+                const response = await fetch(`${API_BASE}/lot/${lotId}`);
+                const lotData = await response.json();
+                
+                const card = document.getElementById(`lot-${lotId}`);
+                if (card) {
+                    const newCard = await createLotCard(lotData);
+                    card.replaceWith(newCard);
+                }
+            } catch (error) {
+                console.error('Error loading single lot:', error);
+            }
+        }
+
+        // Update overall statistics
+        async function updateOverallStats() {
+            try {
+                const response = await fetch(`${API_BASE}/lots`);
+                const lots = await response.json();
+                
+                let totalSpaces = 0;
+                let totalOccupied = 0;
+                let totalAvailable = 0;
+
+                for (const lot of lots) {
+                    totalSpaces += lot.total_spaces;
+                    totalOccupied += lot.occupied_spaces;
+                    totalAvailable += lot.available_spaces;
+                }
+
+                document.getElementById('totalSpaces').textContent = totalSpaces;
+                document.getElementById('totalAvailable').textContent = totalAvailable;
+                document.getElementById('totalOccupied').textContent = totalOccupied;
+                const percent = ((totalOccupied / totalSpaces) * 100).toFixed(1);
+                document.getElementById('overallPercent').textContent = percent + '%';
+
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('lastUpdate').textContent = 
+                    `Last updated: ${now.toLocaleTimeString()}`;
+
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            updateOverallStats();
+        }, 30000);
+
+        // Load data on page load
+        window.addEventListener('load', () => {
+            loadAllLots();
+        });
+    </script>
+</body>
+</html>
