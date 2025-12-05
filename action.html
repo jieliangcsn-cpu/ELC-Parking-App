@@ -1,0 +1,221 @@
+<!--group 1
+auther: Jie liang
+file name: action.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action - Wildlife Conservation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Loading the font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile-First Hamburger Navigation -->
+    <nav class="nav-container">
+        <div class="nav-header">
+            <a href="index.html" class="logo-link">
+                <img src="images/Logo.png" alt="La Jolla Wildlife Conservation Logo">
+            </a>
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="education.html" onclick="toggleSubmenu(event, 'education')">Education</a>
+                    <ul class="submenu" id="education">
+                        <li><a href="oceanLife.html">Ocean Life</a></li>
+                        <li><a href="dangers.html">Dangers</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="action.html" onclick="toggleSubmenu(event, 'action')">Action</a>
+                    <ul class="submenu" id="action">
+                        <li><a href="cando.html">What You Can Do</a></li>
+                        <li><a href="donate.html">Donate/Volunteer</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="about.html" onclick="toggleSubmenu(event, 'about')">About</a>
+                    <ul class="submenu" id="about">
+                        <li><a href="daniel-bio.html">Daniel's Bio</a></li>
+                        <li><a href="grant-bio.html">Grant's Bio</a></li>
+                        <li><a href="JieLiang-bio.html">Jie's Bio</a></li>
+                        <li><a href="rose-bio.html">Rose's Bio</a></li>
+                        <li><a href="ryan-bio.html">Ryan's Bio</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Take Action for San Diego ocean wildlife Rescue</h1>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <p>Join us in making a real difference for animals in need. From emergency rescues to habitat protection, there are many ways you can help protect wildlife and their natural environments.</p>
+        </div>
+
+        <div class="actions-grid">
+            <div class="action-card">
+                <h3>🚑 Emergency Rescue of Injured Animals</h3>
+                <p>Respond to wildlife emergencies by supporting rescue operations. When animals are found injured, sick, or stranded, immediate action can save lives. Learn how to report distressed wildlife and support emergency response teams in your area.</p>
+            </div>
+
+            <div class="action-card">
+                <h3>🦅 Release Back into the Wild</h3>
+                <p>Support rehabilitation programs that nurse injured animals back to health and prepare them for reintroduction to their natural habitats. These programs ensure animals have the best chance of survival when returning to the wild.</p>
+            </div>
+
+            <div class="action-card">
+                <h3>🌿 Beach Cleaning and Protection Projects</h3>
+                <p>Participate in hands-on beach conservation efforts to clean and protect vital coastal habitats. Beach cleanups directly remove harmful debris and pollution, creating safer environments where marine wildlife lives and thrives.</p>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h2>📊 Marine Mammal Stranding Data</h2>
+            
+            <!-- Side-by-side layout: Table on left, Image+Buttons on right -->
+            <div style="display: flex; gap: 20px; align-items: flex-start;">
+                
+                <!-- LEFT SIDE: Table -->
+                <div style="flex: 1;">
+                    <table id="Tablet-desktop" style="border-collapse: collapse; color: black; width: 100%; margin: 0;">
+                        <caption style="padding: 8px; color: black; font-size: 0.95rem;">Table 1. West Coast marine mammal stranding summary in 2022 and 2023</caption>
+                        <thead>
+                            <tr>
+                                <th style="padding: 8px; border: 1px solid #ddd; color: white; font-size: 0.9rem;">Species</th>
+                                <th style="padding: 8px; border: 1px solid #ddd; color: white; font-size: 0.9rem;">2022</th>
+                                <th style="padding: 8px; border: 1px solid #ddd; color: white; font-size: 0.9rem;">2023</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">Pinniped</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">3,457</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">3,965</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">Small Cetacean</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">214</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">336</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">Large Whale</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">53</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">53</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">Unknown Cetacean*</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">1</td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;">2</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;"><strong>Total Stranding</strong></td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;"><strong>3,725</strong></td>
+                                <td style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.9rem;"><strong>4,356</strong></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.85rem;">*"Unknown cetacean" represents stranding reports submitted to the National Stranding Database with insufficient data to classify an animal as either "large whale" or "small cetacean."</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="padding: 8px; border: 1px solid #ddd; color: black; font-size: 0.85rem;"><strong>Source:</strong> NOAA Fisheries National Stranding Database. <a href="https://repository.library.noaa.gov/view/noaa/71157" target="_blank">View Full Report</a></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <!-- RIGHT SIDE: Image + Buttons -->
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Data image -->
+                    <div class="data-image">
+                        <img src="images/seaAnimalStandM.jpg" alt="Marine mammal stranding data" style="width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                    
+                    <!-- Buttons stacked vertically -->
+                    <div class="data-links" style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="https://repository.library.noaa.gov/view/noaa/71157" target="_blank" class="data-button">View Full NOAA Report</a>
+                        <a href="https://www.fisheries.noaa.gov/national/marine-life-distress/national-stranding-database-public-access" target="_blank" class="data-button">Access Stranding Database</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Subpage Navigation Links -->
+        <div class="subpage-nav">
+            <a href="cando.html" class="subpage-link">What You Can Do</a>
+            <a href="donate.html" class="subpage-link">Donate/Volunteer</a>
+        </div>
+    </div>
+
+    <footer class="action-page-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <a href="JieLiang-bio.html">This webpage created by Action Coordinator: Jie Liang</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle main hamburger menu
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Toggle submenu
+        function toggleSubmenu(event, submenuId) {
+            // Only prevent default on mobile
+            if (window.innerWidth < 768) {
+                event.preventDefault();
+                const submenu = document.getElementById(submenuId);
+                const parent = submenu.parentElement;
+                
+                // Close other submenus
+                document.querySelectorAll('.submenu').forEach(menu => {
+                    if (menu.id !== submenuId) {
+                        menu.classList.remove('active');
+                        menu.parentElement.classList.remove('open');
+                    }
+                });
+                
+                // Toggle current submenu
+                submenu.classList.toggle('active');
+                parent.classList.toggle('open');
+            }
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navContainer = document.querySelector('.nav-container');
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!navContainer.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                document.getElementById('navMenu').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
